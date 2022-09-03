@@ -6,6 +6,7 @@ import router from './router'
 import { useUserStore } from '@/store/userStore'
 
 import './permission'
+import './config'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
