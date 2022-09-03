@@ -2,6 +2,7 @@ const constRoutes = [
   {
     path: '/',
     name: 'main',
+    redirect: '/home',
     component: () => import('@/pages/layout'),
     children: [
       {
@@ -12,11 +13,6 @@ const constRoutes = [
     ],
   },
   { path: '/login', name: 'login', component: () => import('@/pages/login') },
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
-  },
 ]
 
 export default constRoutes
