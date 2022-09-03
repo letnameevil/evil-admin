@@ -52,6 +52,17 @@ const asyncRoutes = [
       },
     ],
   },
+  // 错误路由必须放到最后
+  {
+    path: '/:pathMatch(.*)*',
+    // component: () => import('@/pages/err-page/404'),
+    name: 'errPage',
+    // meta: {
+    //   title: 'NOT FOUND',
+    // },
+    redirect: '/404', // 这里的redirect会触发路由前置守卫，但是那个之前输入的那个错误的地址不会触发路由守卫
+    hidden: true,
+  },
 ]
 
 export default asyncRoutes

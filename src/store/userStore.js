@@ -17,7 +17,7 @@ export const useUserStore = defineStore('userStore', {
   actions: {
     handlerRoutes() {
       // console.log(asyncRoutes) // 过滤路由
-
+      
       // 这里判断一下有没有token, 如果没有token 所有的东西都不执行
       const { token } = Lockr.get('userInfo') || {}
       if (!token) return

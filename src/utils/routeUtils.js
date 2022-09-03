@@ -7,7 +7,7 @@ function getMenus(arr) {
   arr.forEach((item, idx) => {
     newArr.push({
       link: item.path,
-      title: item.meta.title,
+      title: item?.meta?.title,
       hidden: item.hidden,
     })
 

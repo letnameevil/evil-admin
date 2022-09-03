@@ -31,7 +31,11 @@ const currentRoute = useRoute();
         <!-- <el-menu-item index="/article/article-del">删除文章</el-menu-item> -->
       </el-sub-menu>
 
-      <el-menu-item v-else :key="keyMenu.title" :index="keyMenu.link">
+      <el-menu-item
+        v-else-if="!keyMenu.hidden"
+        :key="keyMenu.title"
+        :index="keyMenu.link"
+      >
         <template #title>
           <el-icon><message /></el-icon>{{ keyMenu.title }}
         </template>

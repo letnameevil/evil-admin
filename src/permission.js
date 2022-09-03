@@ -6,6 +6,7 @@ import 'nprogress/nprogress.css'
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
+  console.log(to, from, 9999)
   NProgress.start()
   const { token } = Lockr.get('userInfo') || {}
   if (token) {

@@ -13,6 +13,7 @@ const constRoutes = [
     ],
   },
   { path: '/login', name: 'login', component: () => import('@/pages/login') },
+  { path: '/404', name: 'notFound', component: () => import('@/pages/err-page/404') },
 ]
 
 export default constRoutes
