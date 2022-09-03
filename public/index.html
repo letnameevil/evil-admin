@@ -13,5 +13,10 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <% if (process.env.NODE_ENV === 'production') { %>
+      <% for(var js of htmlWebpackPlugin.options.cdn.js) { %>
+        <script src="<%=js%>"></script>
+      <% } %>
+    <% } %>
   </body>
 </html>
