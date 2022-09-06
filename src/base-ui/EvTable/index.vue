@@ -1,6 +1,17 @@
 <template>
   <div class="article-list">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column
+        type="selection"
+        width="30"
+        align="center"
+        v-if="selection"
+      />
+      <!-- 选择框 -->
       <template v-for="itemData in tableProps" :key="itemData.filed">
         <el-table-column
           :label="itemData.label"
@@ -56,18 +67,24 @@ defineProps({
       };
     },
   },
+  selection: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const emits = defineEmits(["getList"]);
+const emits = defineEmits(["getList", "selectList"]);
 
 const handleCurrentChange = (v1, v2) => {
-  console.log("--------", v1, v2);
   emits("getList");
 };
 
 const handleSizeChange = (v1) => {
-  console.log(v1);
   emits("getList");
+};
+
+const handleSelectionChange = (v1) => {
+  emits("selectList", v1);
 };
 </script>
 

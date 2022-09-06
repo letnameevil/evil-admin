@@ -16,7 +16,9 @@ class ELRequest {
     this.instance.interceptors.request.use(
       (config) => {
         if (this.isLoading) {
-          this.loadingInstance = ElLoading.service()
+          this.loadingInstance = ElLoading.service({
+            background: '#ffffff30'
+          })
         }
         return config
       },
@@ -39,12 +41,11 @@ class ELRequest {
         }
 
         return res.data
-
-        
       },
       (err) => {
         this.loadingInstance?.close()
         console.log('err', err)
+        throw new Error('服务出错')
       }
     )
   }

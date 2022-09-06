@@ -6,7 +6,9 @@
         :tableData="articleLists"
         :pageConfig="pageConfig"
         isShowPagination
+        selection
         @getList="getArticleListsHandler"
+        @selectList="selectList"
       >
         <template #opt="{ data }">
           <el-popconfirm
@@ -20,19 +22,23 @@
         </template>
       </ev-table>
     </el-card>
+    <el-button @click="delSelect">批量删除</el-button>
   </div>
 </template>
 
 <script  setup>
-import { ref, reactive, onMounted, toRefs } from "vue";
+import { reactive, onMounted, toRefs } from "vue";
 import { ElNotification } from "element-plus";
 import { getArticleLists, delArticle } from "@/api/article";
 
 import EvTable from "@/base-ui/EvTable";
+import tableProps from "./config/index.table.config";
 
 const articleListInfo = reactive({
   articleLists: [],
 });
+
+let { articleLists } = toRefs(articleListInfo);
 
 const pageConfig = reactive({
   pageSize: 10,
@@ -40,7 +46,41 @@ const pageConfig = reactive({
   total: 0,
 });
 
-let { articleLists } = toRefs(articleListInfo);
+// 表格中选中的项的值
+let selectionArr = [];
+
+const selectList = (v1) => {
+  selectionArr = v1;
+};
+
+const delSelect = async () => {
+  if (selectionArr.length === 0)
+    return ElNotification({
+      title: "提示！",
+      message: "请至少选中一项",
+      duration: 1500,
+    });
+
+  const tempArr = [];
+  selectionArr.forEach((item) => {
+    tempArr.push(item.articleId);
+  });
+
+  let ret = await delArticle({
+    articleId: tempArr,
+  });
+
+
+  ElNotification({
+    title: "提示！",
+    message: ret.message,
+    duration: 500,
+  });
+
+  if (ret.status === 200) {
+    getArticleListsHandler();
+  }
+};
 
 const getArticleListsHandler = () => {
   getArticleLists({
@@ -60,78 +100,19 @@ const handleEdit = (index, row) => {
   console.log(index, row);
 };
 
-// const handleDelete = async (index, row) => {
-//   console.log(row.articleId);
-//   let ret = await delArticle({
-//     articleId: row.articleId,
-//   });
-//   console.log(ret);
-// };
-
 const confirmEvent = async (index, row) => {
   let ret = await delArticle({
     articleId: row.articleId,
   });
-  // console.log(ret.status === 200);
 
   ElNotification({
     title: "提示！",
     message: ret.message,
-    duration: 500,
+    duration: 1500,
   });
 
   if (ret.status === 200) {
     getArticleListsHandler();
   }
 };
-
-const tableProps = [
-  {
-    label: "文章id",
-    filed: "articleId",
-  },
-  {
-    label: "文章标题",
-    filed: "articleTitle",
-  },
-  {
-    label: "文章内容",
-    filed: "content",
-  },
-  {
-    label: "文章作者",
-    filed: "nickName",
-  },
-  {
-    label: "发布时间",
-    filed: "publicAt",
-  },
-  {
-    label: "操作",
-    opt: true,
-  },
-];
-
-const tableData = [
-  {
-    date: "2016-05-03",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-02",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-];
 </script>
