@@ -14,7 +14,7 @@ const asyncRoutes = [
         meta: {
           title: '文章列表',
         },
-        hidden: true,
+        hidden: false,
       },
       {
         path: 'article-del',

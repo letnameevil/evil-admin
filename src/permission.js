@@ -19,6 +19,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach(() => {
+router.afterEach((to) => {
+  window.document.title = to.meta.title
   NProgress.done()
 })

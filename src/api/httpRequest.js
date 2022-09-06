@@ -35,9 +35,12 @@ class ELRequest {
             message: res.data.message,
             type: 'warning',
           })
+          throw new Error('服务出错')
         }
 
         return res.data
+
+        
       },
       (err) => {
         this.loadingInstance?.close()

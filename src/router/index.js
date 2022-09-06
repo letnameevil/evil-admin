@@ -8,7 +8,6 @@ const router = createRouter({
   routes: constRoutes,
 })
 
-
 // export const resetRouter = () => {
 //   const newRouter = createRouter({
 //     history: createWebHashHistory(),

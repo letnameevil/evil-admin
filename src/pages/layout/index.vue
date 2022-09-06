@@ -2,7 +2,7 @@
   <div class="layout">
     <el-container class="layout-container-demo" style="height: 100%">
       <el-aside width="200px">
-        <el-scrollbar> 
+        <el-scrollbar>
           <sider-bar></sider-bar>
         </el-scrollbar>
       </el-aside>
@@ -27,9 +27,7 @@
         </el-header>
 
         <el-main>
-          <el-scrollbar>
-            <router-view></router-view>
-          </el-scrollbar>
+          <main-container></main-container>
         </el-main>
       </el-container>
     </el-container>
@@ -39,16 +37,15 @@
 
 
 <script  setup>
-import { ref } from "vue";
 import { Menu as IconMenu, Message, Setting } from "@element-plus/icons-vue";
 import SiderBar from "./components/SiderBar.vue";
+import MainContainer from "./components/MainContainer.vue";
 
 const item = {
   date: "2016-05-02",
   name: "Tom",
   address: "No. 189, Grove St, Los Angeles",
 };
-const tableData = ref(Array.from({ length: 20 }).fill(item));
 </script>
 
 <style scoped lang="less">
@@ -58,7 +55,7 @@ const tableData = ref(Array.from({ length: 20 }).fill(item));
   right: 0;
   bottom: 0;
   top: 0;
-  background-color: #ccc;
+  background-color: #fff;
 }
 
 .layout-container-demo .el-header {
@@ -74,7 +71,7 @@ const tableData = ref(Array.from({ length: 20 }).fill(item));
   border-right: none;
 }
 .layout-container-demo .el-main {
-  padding: 0;
+  padding: 0px;
 }
 .layout-container-demo .toolbar {
   display: inline-flex;

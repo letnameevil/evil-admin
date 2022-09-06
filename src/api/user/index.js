@@ -9,6 +9,6 @@ export const login = (data) => {
         return config
       },
     },
-    isLoading: false,
+    isLoading: true,
   })
 }
