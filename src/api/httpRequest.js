@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ElLoading, ElMessage } from 'element-plus'
-
+import router from '@/router'
 class ELRequest {
   constructor(axiosConfig) {
     this.instance = axios.create({
@@ -17,7 +17,7 @@ class ELRequest {
       (config) => {
         if (this.isLoading) {
           this.loadingInstance = ElLoading.service({
-            background: '#ffffff30'
+            background: '#ffffff30',
           })
         }
         return config
@@ -31,6 +31,16 @@ class ELRequest {
     this.instance.interceptors.response.use(
       (res) => {
         this.loadingInstance?.close()
+
+        // token过期
+        if (res.data.status === 401) {
+          ElMessage({
+            message: res.data.message,
+            type: 'warning',
+          })
+          router.replace('/login')
+          throw new Error('服务出错')
+        }
 
         if (res.data.status >= 400) {
           ElMessage({

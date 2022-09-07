@@ -9,6 +9,7 @@ function getMenus(arr) {
       link: item.path,
       title: item?.meta?.title,
       hidden: item.hidden,
+      icon: item?.meta?.icon
     })
 
     if (item.children) {

@@ -5,6 +5,7 @@ import { useRoute } from "vue-router";
 
 const userStore = useUserStore();
 
+
 const currentRoute = useRoute();
 
 // console.log(userStore.sideBarMenus);
@@ -19,7 +20,7 @@ const currentRoute = useRoute();
         :key="keyMenu.title"
       >
         <template #title>
-          <el-icon><message /></el-icon>{{ keyMenu.title }}
+          <i class="iconfont icon-style" :class="keyMenu.icon"></i>{{ keyMenu.title }}
         </template>
 
         <template v-for="subMenu in keyMenu.children" :key="subMenu.title">
@@ -43,6 +44,14 @@ const currentRoute = useRoute();
     </template>
   </el-menu>
 </template>
+
+<style lang="less" scoped>
+
+.icon-style {
+  margin-right: 5px;
+}
+  
+</style>
 
 
 

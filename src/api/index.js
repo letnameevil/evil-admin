@@ -9,7 +9,7 @@ export default new ELRequest({
     requestInterceptor: (config) => {
       const { token } = Lockr.get('userInfo') || {}
       if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = `${token}`
       }
       return config
     },

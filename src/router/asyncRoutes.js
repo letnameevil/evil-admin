@@ -5,6 +5,7 @@ const asyncRoutes = [
     component: () => import('@/pages/layout'),
     meta: {
       title: '文章管理',
+      icon: 'icon-24'
     },
     children: [
       {
@@ -32,6 +33,7 @@ const asyncRoutes = [
     component: () => import('@/pages/layout'),
     meta: {
       title: '新增操作',
+      icon: 'icon-wenjianshangchuan'
     },
     children: [
       {
@@ -51,6 +53,33 @@ const asyncRoutes = [
         },
       },
     ],
+  },
+  {
+    path: '/upload',
+    name: 'upload',
+    component: () => import('@/pages/layout'),
+    meta: {
+      title: '文件上传',
+      icon: 'icon-shangchuan'
+    },
+    children: [
+      {
+        path: 'upload-avatar',
+        name: 'uploadAvatar',
+        component: () => import('@/pages/upload/upload-avatar'),
+        meta: {
+          title: '上传图片',
+        },
+      },
+      {
+        path: 'upload-file',
+        name: 'uploadFile',
+        component: () => import('@/pages/upload/upload-file'),
+        meta: {
+          title: '上传文件',
+        },
+      },
+    ], 
   },
   // 错误路由必须放到最后
   {
