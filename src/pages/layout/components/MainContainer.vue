@@ -5,7 +5,3 @@
     </div>
   </el-scrollbar>
 </template>
-
-<style lang="less" scoped>
-
-</style>

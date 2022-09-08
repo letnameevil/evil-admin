@@ -1,3 +1,1 @@
-<template>
-  403
-</template>
+<template>403</template>

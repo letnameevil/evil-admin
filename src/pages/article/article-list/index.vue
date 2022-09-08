@@ -70,7 +70,6 @@ const delSelect = async () => {
     articleId: tempArr,
   });
 
-
   ElNotification({
     title: "提示！",
     message: ret.message,
