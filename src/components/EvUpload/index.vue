@@ -66,13 +66,19 @@ const uploadRef = ref();
 
 const fileList = ref([]);
 
+// 临时的一个文件
 const sendFiles = ref([]);
 
 const dialogImageUrl = ref("");
 const dialogVisible = ref(false);
 
 const handleRemove = (uploadFile, uploadFiles) => {
-  console.log(uploadFile.uid);
+  if (uploadFile.response) {
+    const idx = sendFiles.value.findIndex((item) => {
+      return item.message === uploadFile.response.message;
+    });
+    sendFiles.value.splice(idx, 1);
+  }
 };
 
 // 做一个限制
@@ -87,6 +93,9 @@ const handleChange = (v1, v2) => {
 const emit = defineEmits(["sendResponseMessage"]);
 
 const handleSuccess = (v1, v2) => {
+  if (v1.status === 401) {
+    throw new Error("token无效");
+  }
   // 记录一下上传之前的文件的长度
   const fileListLength = fileList.value.length;
   sendFiles.value.push(v1);

@@ -1,17 +1,16 @@
 <template>
-  <div class="add-article">
+  <div class="form-container">
     <el-form
       class="demo-ruleForm"
       ref="ruleFormRef"
       :model="formData"
       :rules="rules"
       label-width="auto"
-      :size="formSize"
       status-icon
     >
       <el-row :gutter="20">
         <template v-for="item in formConfig" :key="item.filed">
-          <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="6">
+          <el-col v-bind="colLayout">
             <!-- 普通输入框 -->
             <el-form-item
               v-if="item.type === 'input'"
@@ -56,6 +55,16 @@
                 v-bind="item.options"
               />
             </el-form-item>
+
+            <!-- 上传图片 -->
+            <el-form-item :label="item.label" v-if="item.type === 'uploadFile'">
+              <!-- 图片上传  -->
+              <ev-upload
+                ref="upLoadRef"
+                v-bind="item.upOptions"
+                @sendResponseMessage="getResponseMessage"
+              />
+            </el-form-item>
           </el-col>
         </template>
       </el-row>
@@ -69,8 +78,10 @@
 <script setup>
 import { reactive, ref } from "vue";
 
-const formSize = ref("default");
+import EvUpload from "@/components/EvUpload";
+
 const ruleFormRef = ref();
+const upLoadRef = ref();
 
 const props = defineProps({
   formConfig: {
@@ -85,14 +96,30 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  // 由于el-col的响应式是根据窗口大小配置的，有时候需要手动配置el-col的属性 例如span="24"
+  colLayout: {
+    type: Object,
+    default: () => {
+      return {
+        xl: 6, // 24/6 = 4
+        lg: 8, // 24/8 = 3
+        md: 12, // 24/12 = 2
+        sm: 24, // 24/24 = 1
+        xs: 24, // 24/24 = 1
+      };
+    },
+  },
 });
+
+const emits = defineEmits("sendUrlList");
 
 const submitForm = (formEl = ruleFormRef.value) => {
   if (!formEl) return;
+
   return new Promise((resolver, reject) => {
     formEl.validate((valid, fields) => {
       if (valid) {
-        console.log("submit!", props.formData);
+        upLoadRef.value[0].submit();
         resolver(true);
       } else {
         console.log("error submit!", fields);
@@ -105,6 +132,15 @@ const submitForm = (formEl = ruleFormRef.value) => {
 const resetForm = (formEl = ruleFormRef.value) => {
   if (!formEl) return;
   formEl.resetFields();
+  upLoadRef.value[0].clearFiles();
+};
+
+const getResponseMessage = (res = []) => {
+  for (let i = 0; i < res.length; i++) {
+    if (res.status > 200) return emits("sendUrlList", false);
+  }
+
+  emits("sendUrlList", res);
 };
 
 defineExpose({

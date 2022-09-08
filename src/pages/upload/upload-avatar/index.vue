@@ -54,10 +54,10 @@ const submitForm = (formEl) => {
   if (!formEl) return;
   // 发请求拿到数据
   evuplodRef.value.submit();
+  // console.log(evuplodRef.value)
 };
 
 const resetForm = (formEl) => {
-  console.log(formEl, 999)
   if (!formEl) return;
   formEl.resetFields();
   evuplodRef.value.clearFiles();

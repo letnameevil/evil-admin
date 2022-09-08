@@ -32,6 +32,15 @@ export const formConfig = [
       valueFormat: 'YYYY-MM-DD hh:mm:ss',
     },
   },
+  {
+    label: '图片上传',
+    type: 'uploadFile',
+    upOptions: {
+      tips: '*只能上传一张图片',
+      action: 'http://localhost:8888/upload/upAvatar',
+      name: 'avatar',
+    },
+  },
 ]
 
 export const rules = {
