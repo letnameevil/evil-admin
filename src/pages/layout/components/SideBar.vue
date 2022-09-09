@@ -1,9 +1,13 @@
 <script setup>
 import { Menu as IconMenu, Message, Setting } from "@element-plus/icons-vue";
-import { useUserStore } from "@/store/userStore";
+import { useUserStore,useConfigStore } from "@/store/userStore";
 import { useRoute } from "vue-router";
+import {ref} from 'vue'
+
+const isCollapse = ref(true)
 
 const userStore = useUserStore();
+const configStore = useConfigStore()
 
 
 const currentRoute = useRoute();
@@ -12,7 +16,7 @@ const currentRoute = useRoute();
 </script>
 
 <template>
-  <el-menu router :default-active="currentRoute.path">
+  <el-menu router :default-active="currentRoute.path" :collapse="configStore.isCollapse">
     <template v-for="keyMenu in userStore.sideBarMenus">
       <el-sub-menu
         :index="keyMenu.link"
@@ -20,7 +24,8 @@ const currentRoute = useRoute();
         :key="keyMenu.title"
       >
         <template #title>
-          <i class="iconfont icon-style" :class="keyMenu.icon"></i>{{ keyMenu.title }}
+          <i class="iconfont icon-style" :class="keyMenu.icon"></i>
+          <span>{{ keyMenu.title }}</span>
         </template>
 
         <template v-for="subMenu in keyMenu.children" :key="subMenu.title">

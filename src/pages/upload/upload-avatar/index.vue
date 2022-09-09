@@ -50,6 +50,8 @@ const ruleForm = reactive({
 });
 
 
+console.log(evuplodRef)
+
 const submitForm = (formEl) => {
   if (!formEl) return;
   // 发请求拿到数据

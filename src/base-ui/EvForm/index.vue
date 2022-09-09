@@ -58,7 +58,7 @@
 
             <!-- 上传图片 -->
             <el-form-item :label="item.label" v-if="item.type === 'uploadFile'">
-              <!-- 图片上传  -->
+              <!-- 图片上传组件  -->
               <ev-upload
                 ref="upLoadRef"
                 v-bind="item.upOptions"
@@ -76,12 +76,22 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 
 import EvUpload from "@/components/EvUpload";
 
+
+
 const ruleFormRef = ref();
-const upLoadRef = ref();
+const upLoadRef = ref(null);
+
+
+
+onMounted(() => {
+  console.log(upLoadRef); // <div>123</div>
+});
+
+console.log(upLoadRef,9999)
 
 const props = defineProps({
   formConfig: {
@@ -119,6 +129,7 @@ const submitForm = (formEl = ruleFormRef.value) => {
   return new Promise((resolver, reject) => {
     formEl.validate((valid, fields) => {
       if (valid) {
+        console.log(upLoadRef, 9999);
         upLoadRef.value[0].submit();
         resolver(true);
       } else {

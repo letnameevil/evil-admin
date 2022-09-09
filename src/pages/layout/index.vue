@@ -1,29 +1,16 @@
 <template>
   <div class="layout">
     <el-container class="layout-container-demo" style="height: 100%">
-      <el-aside width="200px">
+      <el-aside :width="elAsideWidth" class="el-aside-cls" ref="asideRef">
         <el-scrollbar>
-          <sider-bar></sider-bar>
+          <side-title></side-title>
+          <side-bar></side-bar>
         </el-scrollbar>
       </el-aside>
 
       <el-container>
-        <el-header style="text-align: right; font-size: 12px">
-          <div class="toolbar">
-            <el-dropdown>
-              <el-icon style="margin-right: 8px; margin-top: 1px"
-                ><setting
-              /></el-icon>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>View</el-dropdown-item>
-                  <el-dropdown-item>Add</el-dropdown-item>
-                  <el-dropdown-item>Delete</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-            <span>Tom</span>
-          </div>
+        <el-header style="font-size: 12px; display: flex">
+          <header-content></header-content>
         </el-header>
 
         <el-main>
@@ -37,9 +24,27 @@
 
 
 <script  setup>
-import { Menu as IconMenu, Message, Setting } from "@element-plus/icons-vue";
-import SiderBar from "./components/SiderBar.vue";
+import { ref, watch, getCurrentInstance } from "vue";
+import { useConfigStore } from "@/store/userStore";
+import { storeToRefs } from "pinia";
+import SideBar from "./components/SideBar.vue";
+import SideTitle from "./components/SideTitle.vue";
+import HeaderContent from "./components/HeaderContent.vue";
 import MainContainer from "./components/MainContainer.vue";
+
+const configStore = useConfigStore();
+
+const elAsideWidth = ref("200px");
+
+const asideRef = ref();
+
+let { isCollapse } = storeToRefs(configStore);
+
+watch(isCollapse, (newValue) => {
+  // elAsideWidth
+  if (newValue === true) return (elAsideWidth.value = "60px");
+  elAsideWidth.value = "200px";
+});
 
 const item = {
   date: "2016-05-02",
@@ -49,6 +54,10 @@ const item = {
 </script>
 
 <style scoped lang="less">
+.el-aside-cls {
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
 .layout {
   position: fixed;
   left: 0;
