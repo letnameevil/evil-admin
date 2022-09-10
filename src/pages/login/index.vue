@@ -102,7 +102,7 @@ const login = async (formEl) => {
           <el-input v-model="formData.password" type="password" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="login(ruleFormRef)">登陆</el-button>
+          <el-button type="primary" @click="login(ruleFormRef)">登录</el-button>
           <el-button type="primary" @click="seeRoutes">查看当前所有路由</el-button>
         </el-form-item>
       </el-form>
