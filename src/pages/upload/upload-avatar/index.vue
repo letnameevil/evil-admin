@@ -17,7 +17,7 @@
     <el-form-item label="头像上传：">
       <ev-upload
         ref="evuplodRef"
-        :action="`http://localhost:8888/upload/upAvatar`"
+        :action="`${BASE_URL}/upload/upAvatar`"
         name="avatar"
         @sendResponseMessage="getResponseMessage"
       >
@@ -40,6 +40,7 @@
 import { ref, reactive } from "vue";
 import EvUpload from "@/components/EvUpload";
 import { checkboxGroupEmits } from "element-plus";
+import { BASE_URL } from "@/config";
 
 const evuplodRef = ref();
 const ruleFormRef = ref();
@@ -49,8 +50,7 @@ const ruleForm = reactive({
   imageUrl: "",
 });
 
-
-console.log(evuplodRef)
+console.log(evuplodRef);
 
 const submitForm = (formEl) => {
   if (!formEl) return;
@@ -75,11 +75,9 @@ const getResponseMessage = (res = []) => {
   // 赋值以后发请求 然后重置表单
   setTimeout(() => {
     console.log(ruleForm);
-    resetForm(ruleFormRef.value)
+    resetForm(ruleFormRef.value);
   });
 };
-
-
 </script>
 
 
