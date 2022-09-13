@@ -13,7 +13,7 @@
           <el-col v-bind="colLayout">
             <!-- 普通输入框 -->
             <el-form-item
-              v-if="item.type === 'input'"
+              v-if="item.type === 'input' || item.type === 'password'"
               :label="item.label"
               :prop="item.filed"
               :label-width="item.labelWidth"
@@ -21,6 +21,7 @@
               <el-input
                 v-model="formData[item.filed]"
                 :placeholder="item.placeholder"
+                :type="item.type"
               />
             </el-form-item>
 
@@ -80,18 +81,14 @@ import { onMounted, reactive, ref } from "vue";
 
 import EvUpload from "@/components/EvUpload";
 
-
-
 const ruleFormRef = ref();
 const upLoadRef = ref(null);
-
-
 
 onMounted(() => {
   console.log(upLoadRef); // <div>123</div>
 });
 
-console.log(upLoadRef,9999)
+console.log(upLoadRef, 9999);
 
 const props = defineProps({
   formConfig: {
@@ -130,7 +127,9 @@ const submitForm = (formEl = ruleFormRef.value) => {
     formEl.validate((valid, fields) => {
       if (valid) {
         console.log(upLoadRef, 9999);
-        upLoadRef.value[0].submit();
+        if (upLoadRef.value) {
+          upLoadRef.value[0].submit();
+        }
         resolver(true);
       } else {
         console.log("error submit!", fields);

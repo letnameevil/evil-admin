@@ -81,6 +81,25 @@ const asyncRoutes = [
       },
     ], 
   },
+  {
+    path: '/users',
+    name: 'users',
+    component: () => import('@/pages/layout'),
+    meta: {
+      title: '用户管理',
+      icon: 'icon-shangchuan'
+    },
+    children: [
+      {
+        path: 'users-list',
+        name: 'usersList',
+        component: () => import('@/pages/users/users-list'),
+        meta: {
+          title: '用户列表',
+        },
+      }
+    ]
+  },
   // 错误路由必须放到最后
   {
     path: '/:pathMatch(.*)*',

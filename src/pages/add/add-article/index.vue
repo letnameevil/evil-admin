@@ -13,7 +13,7 @@
         </div>
       </template>
     </ev-form> -->
-    <el-dialog v-model="isShow" title="弹出层">
+    <el-dialog v-model="isShow" title="新增用户">
       <ev-form
         ref="evFormRef"
         :formConfig="formConfig"

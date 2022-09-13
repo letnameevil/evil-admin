@@ -5,21 +5,27 @@
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
+      <!-- 选择框 -->
       <el-table-column
         type="selection"
         width="30"
         align="center"
         v-if="selection"
       />
-      <!-- 选择框 -->
+      <!-- 内容 -->
       <template v-for="itemData in tableProps" :key="itemData.filed">
         <el-table-column
           :label="itemData.label"
           :prop="itemData.filed"
           align="center"
         >
-          <template #default="scope" v-if="itemData.opt">
-            <slot name="opt" :data="scope"> 请在插槽中输入内容 </slot>
+          <template #default="scope">
+            <slot v-if="itemData.opt" name="opt" :data="scope">
+              请在插槽中输入内容
+            </slot>
+            <slot v-if="itemData.tag" name="tag" :data="scope">
+              请在插槽中输入内容
+            </slot>
           </template>
         </el-table-column>
       </template>
