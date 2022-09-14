@@ -56,7 +56,10 @@ module.exports = defineConfig({
       return {
         plugins: [
           new CompressionPlugin({
-            test: /\.js$|\.html$|\.css/,
+            algorithm: 'gzip', // 使用gzip压缩
+            filename: '[path].gz[query]', //  使得多个.gz文件合并成一个文件，这种方式压缩后的文件少，建议使用
+            minRatio: 0.8, // 压缩率小于1才会压缩
+            test: /\.js$|\.css$|\.html$|\.ttf$|\.eot$|\.woff$/,
             threshold: 10240, // 单位是Byte
             deleteOriginalAssets: false,   // 是否删除原文件
           }),
