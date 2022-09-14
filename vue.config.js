@@ -1,6 +1,9 @@
 const { defineConfig } = require('@vue/cli-service')
+// 配合nginx实现.zp的静态压缩（压缩好了，nginx自动返回）------ 动态压缩，每次请求服务器都会在线压缩资源，浪费性能（动态压缩前端不需要做任何处理）
+const CompressionPlugin = require('compression-webpack-plugin')
 module.exports = defineConfig({
   transpileDependencies: true,
+  productionSourceMap: false,
   devServer: {
     proxy: {
       '^/api': {
@@ -20,7 +23,7 @@ module.exports = defineConfig({
         'vue-router': 'VueRouter',
         'element-plus': 'ElementPlus',
         // TODO: pinia vue-demi ，这两个有关联，但是在打包后会出现报错问题
-        // 'vue-demi':'VueDemi',  
+        // 'vue-demi':'VueDemi',
         // pinia: 'pinia',
         lodash: '_',
       }
@@ -46,6 +49,19 @@ module.exports = defineConfig({
         args[0].cdn = cdn
         return args
       })
+    }
+  },
+  configureWebpack: (config) => {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        plugins: [
+          new CompressionPlugin({
+            test: /\.js$|\.html$|\.css/,
+            threshold: 10240, // 单位是Byte
+            deleteOriginalAssets: false,   // 是否删除原文件
+          }),
+        ],
+      }
     }
   },
 })
