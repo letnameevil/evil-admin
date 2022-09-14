@@ -30,19 +30,27 @@ module.exports = defineConfig({
 
       config.externals(externals)
       const cdn = {
+        // js: [
+        //   // vue
+        //   'https://unpkg.com/vue@3.2.38/dist/vue.global.js',
+        //   // vue-router
+        //   'https://unpkg.com/vue-router@4.1.5/dist/vue-router.global.js',
+        //   // element-plus
+        //   'https://unpkg.com/element-plus@2.2.16/dist/index.full.js',
+        //   // vue-demi
+        //   // 'https://unpkg.com/vue-demi@0.13.11/lib/index.iife.js',
+        //   // pinia
+        //   // 'https://unpkg.com/pinia@2.0.21/dist/pinia.iife.js',
+        //   // lodash
+        //   'https://unpkg.com/lodash@4.17.21/lodash.js',
+        // ],
+        
+        // cdn到自己的服务器上
         js: [
-          // vue
-          'https://unpkg.com/vue@3.2.38/dist/vue.global.js',
-          // vue-router
-          'https://unpkg.com/vue-router@4.1.5/dist/vue-router.global.js',
-          // element-plus
-          'https://unpkg.com/element-plus@2.2.16/dist/index.full.js',
-          // vue-demi
-          // 'https://unpkg.com/vue-demi@0.13.11/lib/index.iife.js',
-          // pinia
-          // 'https://unpkg.com/pinia@2.0.21/dist/pinia.iife.js',
-          // lodash
-          'https://unpkg.com/lodash@4.17.21/lodash.js',
+          'http://121.40.238.136/cdn/vue.js',
+          'http://121.40.238.136/cdn/vue-router.js',
+          'http://121.40.238.136/cdn/element.js',
+          'http://121.40.238.136/cdn/lodash.js',
         ],
       }
       config.plugin('html').tap((args) => {
@@ -60,7 +68,7 @@ module.exports = defineConfig({
             minRatio: 0.8, // 压缩率小于1才会压缩
             test: /\.js$|\.css$|\.html$|\.ttf$|\.eot$|\.woff$/,
             threshold: 10240, // 单位是Byte
-            deleteOriginalAssets: false,   // 是否删除原文件
+            deleteOriginalAssets: false, // 是否删除原文件
           }),
         ],
       }
