@@ -1,6 +1,6 @@
 <script setup name="login">
 import { reactive, ref } from "vue";
-import {useRouter} from 'vue-router'
+import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { login as userLogin } from "@/api/user";
 import * as Lockr from "lockr";
@@ -8,7 +8,7 @@ import * as Lockr from "lockr";
 import { useUserStore } from "@/store/userStore";
 
 const userStore = useUserStore();
-const Router = useRouter()
+const Router = useRouter();
 
 const ruleFormRef = ref(null);
 
@@ -29,8 +29,8 @@ const rules = reactive({
 });
 
 const seeRoutes = () => {
-  console.log('Router.getRoutes()',Router.getRoutes())
-}
+  console.log("Router.getRoutes()", Router.getRoutes());
+};
 
 // 登陆按钮
 const login = async (formEl) => {
@@ -49,24 +49,22 @@ const login = async (formEl) => {
             type: "success",
           });
 
-          // console.log(res)
-          const { name, roles, token, userId } = res;
+          console.log(res);
+          const { name, roles, token, userId, nickName } = res;
           // 拿到用户数据，存到状态管理和本地存储中.....
           userStore.userInfo = {
             name,
             roles,
             token,
             userId,
+            nickName,
           };
           // 本地存储
-          Lockr.set("userInfo", { name, roles, token, userId });
+          Lockr.set("userInfo", { name, roles, token, userId, nickName });
           // 处理路由
           userStore.handlerRoutes();
           // 跳转路由
-          Router.replace('/home')
-
-
-
+          Router.replace("/home");
         } else {
           ElMessage({
             message: "登陆失败，请重试...",
@@ -103,7 +101,9 @@ const login = async (formEl) => {
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login(ruleFormRef)">登录</el-button>
-          <el-button type="primary" @click="seeRoutes">查看当前所有路由</el-button>
+          <el-button type="primary" @click="seeRoutes"
+            >查看当前所有路由</el-button
+          >
         </el-form-item>
       </el-form>
     </div>

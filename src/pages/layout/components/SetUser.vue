@@ -8,15 +8,18 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <span>Tom</span>
+    <span>{{Lockr.get('userInfo').nickName || 'user'}}</span>
   </div>
 </template>
 
 <script setup>
 import { Setting } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
+import * as Lockr from 'lockr'
 import asyncRoutes from "@/router/asyncRoutes";
 const Router = useRouter();
+
+console.log(Lockr.get('userInfo'))
 const logout = () => {
   // 执行退出登录操作
   // 清空所有记录
