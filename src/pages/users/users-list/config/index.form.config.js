@@ -21,6 +21,7 @@ export const formConfig = [
     label: '请选择用户角色',
     filed: 'roles',
     type: 'select',
+    isMultiple: true,
     placeholder: '请选择用户角色',
     selectionOpt: [
       {
@@ -31,6 +32,10 @@ export const formConfig = [
         label: '普通用户',
         value: 'user',
       },
+      {
+        label: 'vip用户',
+        value: 'vip'
+      }
     ],
   },
 ]

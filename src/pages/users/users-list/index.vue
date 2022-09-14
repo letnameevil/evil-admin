@@ -1,7 +1,7 @@
 <template>
   <div class="users-list">
     <el-card>
-      <el-button @click="addUser">新增用户</el-button>
+      <el-button @click="isShow = true">新增用户</el-button>
     </el-card>
 
     <el-card>
@@ -44,27 +44,27 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
+import { ElMessage } from "element-plus";
 import EvTable from "@/base-ui/EvTable";
 import EvForm from "@/base-ui/EvForm";
 import tableProps from "./config/index.table.config";
 import { formConfig, rules } from "./config/index.form.config";
 
 // api
-import { getUserList } from "@/api/users";
+import { getUserList, addUser } from "@/api/users";
 
 const userList = ref([]);
 
-getUserList().then((res) => {
-  console.log(res.records);
-  userList.value = res.records;
-});
-
-const addUser = () => {};
-
-const btnClick = (v1) => {
-  console.log(v1.row);
+// 封装一个方法获取用户列表
+const handlerUserList = async () => {
+  const ret = await getUserList();
+  userList.value = ret.records;
 };
+
+onMounted(() => {
+  handlerUserList();
+});
 
 const ruleForm = reactive({
   name: "",
@@ -73,19 +73,33 @@ const ruleForm = reactive({
   roles: [],
 });
 
-const isShow = ref(true);
+const isShow = ref(false);
 
 const evFormRef = ref();
 
-const makeSubmit = async () => {
-  const ret = await evFormRef.value.submitForm(); // 结果为true代表表单校验成功， 可以发请求了
-
-  if (ret) {
-    console.log(ruleForm);
-  }
-};
-
 const reset = () => {
   evFormRef.value.resetForm();
+};
+
+const close = () => {
+  reset();
+};
+
+const makeSubmit = async () => {
+  const ret = await evFormRef.value.submitForm(); // 结果为true代表表单校验成功， 可以发请求了
+  if (ret) {
+    let res = await addUser(ruleForm);
+    if (res.status === 200) {
+      ElMessage({
+        message: "新增用户成功",
+        type: "success",
+      });
+      // 重置表单
+      reset();
+      isShow.value = false;
+      // 重新获取数据
+      handlerUserList();
+    }
+  }
 };
 </script>

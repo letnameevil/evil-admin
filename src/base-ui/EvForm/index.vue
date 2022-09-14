@@ -34,6 +34,7 @@
               <el-select
                 v-model="formData[item.filed]"
                 :placeholder="item.placeholder"
+                :multiple="item.isMultiple"
               >
                 <el-option
                   v-for="selectItem in item.selectionOpt"
@@ -126,7 +127,6 @@ const submitForm = (formEl = ruleFormRef.value) => {
   return new Promise((resolver, reject) => {
     formEl.validate((valid, fields) => {
       if (valid) {
-        console.log(upLoadRef, 9999);
         if (upLoadRef.value) {
           upLoadRef.value[0].submit();
         }
@@ -142,7 +142,9 @@ const submitForm = (formEl = ruleFormRef.value) => {
 const resetForm = (formEl = ruleFormRef.value) => {
   if (!formEl) return;
   formEl.resetFields();
-  upLoadRef.value[0].clearFiles();
+  if (upLoadRef.value) {
+    upLoadRef.value[0].clearFiles();
+  }
 };
 
 const getResponseMessage = (res = []) => {
